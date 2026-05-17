@@ -1,0 +1,7 @@
+entity_name,reason,risk_level
+"TSMC","Export control verification pending for high-performance computing nodes","Medium"
+"Micron Technology","Allegations of proprietary technology leakage to restricted markets","High"
+"GlobalFoundries","Clean record","Low"
+"SMIC","Direct match on international export restricted entity lists","High"
+"AMD","Routine check - no active sanctions","Low"
+"NVIDIA","Under review for potential dual-use technology diversion","Medium"

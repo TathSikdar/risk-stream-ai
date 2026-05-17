@@ -1,0 +1,84 @@
+@import '../variables';
+
+.transaction-table {
+  width: 100%;
+  border: 1px solid $color-border;
+  border-radius: $border-radius;
+  overflow: hidden;
+
+  &__header {
+    display: flex;
+    background-color: $color-primary;
+    color: white;
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: $spacing-md 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+}
+
+.table-header__cell, .table-row__cell {
+  padding: 0 $spacing-lg;
+  display: flex;
+  align-items: center;
+
+  &--id { width: 100px; }
+  &--entities { flex-grow: 1; }
+  &--amount { width: 180px; justify-content: flex-end; }
+  &--date { width: 150px; }
+  &--status { width: 180px; }
+}
+
+.table-row {
+  display: flex;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  border-bottom: 1px solid $color-border;
+  font-size: 0.9rem;
+
+  &:hover {
+    background-color: rgba($color-primary, 0.05);
+  }
+
+  &--even {
+    background-color: #fafafa;
+  }
+
+  &__cell {
+    &--entities {
+      gap: $spacing-sm;
+      font-weight: 500;
+    }
+
+    &--amount {
+      font-family: 'Roboto Mono', monospace;
+      font-weight: 600;
+      color: $color-primary;
+    }
+  }
+}
+
+.entity-name {
+  color: $color-text-main;
+}
+
+.entity-arrow {
+  color: $color-text-muted;
+}
+
+.status-badge {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+  padding: $spacing-xs $spacing-sm;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+
+  &--pending { background-color: rgba($color-warning, 0.15); color: darken($color-warning, 20%); }
+  &--flagged { background-color: rgba($color-danger, 0.15); color: $color-danger; }
+  &--approved { background-color: rgba($color-success, 0.15); color: darken($color-success, 5%); }
+  &--rejected { background-color: rgba($color-text-muted, 0.15); color: $color-text-muted; }
+}

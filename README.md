@@ -1,15 +1,16 @@
-# Scotia-Guard: AML Compliance Orchestrator
+# RiskStream AI: AML Compliance Orchestrator
 
 ![Architecture: Microservices](https://img.shields.io/badge/Architecture-Microservices-blue)
 ![AI Framework: LangGraph](https://img.shields.io/badge/AI-LangGraph-orange)
-![Frontend: React](https://img.shields.io/badge/Frontend-React-61DAFB)
-![Backend: Node.js/Python](https://img.shields.io/badge/Backend-Node.js%20%7C%20Python-4CAF50)
+![Frontend: React](https://img.shields.io/badge/Frontend-React--TS-61DAFB)
+![Backend: Node.js](https://img.shields.io/badge/Backend-Node.js-339933)
 
-## System Overview
+## 1. Executive Summary
 
-**Scotia-Guard** is a state-of-the-art, full-stack application engineered to automate Anti-Money Laundering (AML) and Adverse Media monitoring for enterprise banking environments.
+**RiskStream AI** is a state-of-the-art, full-stack application engineered to automate Anti-Money Laundering (AML) and Adverse Media monitoring for enterprise banking environments.
 
-Traditionally, compliance analysts manually search through news streams, international watchlists, and vast transaction logs to flag risky entities—a process that is notoriously slow, costly, and prone to human error. Scotia-Guard revolutionizes this workflow by deploying an **Agentic AI backend** that autonomously ingests high-value transaction logs, queries simulated external news APIs and sanction lists, and processes the retrieved data using Large Language Models (LLMs).
+Traditionally, compliance analysts manually search through news streams, international watchlists, and vast transaction logs to flag risky entities—a process that is notoriously slow, costly, and prone to human error. RiskStream AI revolutionizes this workflow by deploying an **Agentic AI backend** that autonomously ingests high-value transaction logs, queries simulated external news APIs and sanction lists, and processes the retrieved data using Large Language Models (LLMs).
+
 
 The output is a structured, mathematically robust "Risk Score," presented to compliance officers on a secure, high-density, and highly accessible React dashboard. The system strictly enforces banking security standards, utilizing a Backend-for-Frontend (BFF) architecture to manage Role-Based Access Control (RBAC), JWT authentication, and comprehensive audit logging.
 
@@ -60,7 +61,66 @@ To ensure enterprise security, the React frontend never communicates directly wi
 
 - **Language:** Python 3.10+
 - **Framework:** LangChain & LangGraph
+- **LLM Providers:** Supports **Google Gemini** (Free tier), **NVIDIA NIM** (e.g., Llama-3.1-70b), and **OpenAI** (GPT-4o).
 - **Capabilities:** Tool-calling agents capable of multi-step reasoning, automated entity extraction, and strict JSON schema generation.
+
+---
+
+## 🚀 Getting Started
+
+### 1. Prerequisites
+- Python 3.10+
+- Node.js 18+
+- NVIDIA NIM API Key (or OpenAI API Key)
+
+### 2. Environment Configuration
+Create a `.env` file in the root directory based on `.env.example`:
+```bash
+LLM_PROVIDER=NVIDIA
+NVIDIA_API_KEY=your_key_here
+```
+
+### 3. Installation & Execution
+
+#### AI Engine (Python)
+```bash
+cd ai_engine
+# (Configure .env with TAVILY_API_KEY and OPENSANCTIONS_API_KEY)
+python main.py
+```
+
+#### BFF (Node.js)
+```bash
+cd backend
+npm install
+npm run dev
+```
+
+#### Frontend (React)
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+### 4. Real-Time Ingestion (Optional)
+To simulate a live transaction arriving from your core banking system, send a POST request to the ingestion webhook:
+```bash
+curl -X POST http://localhost:5000/api/ingest \
+  -H "Content-Type: application/json" \
+  -d '{
+    "sender_name": "SMIC",
+    "receiver_name": "Tech Corp",
+    "amount": 2500000.00,
+    "currency": "USD",
+    "description": "Chip manufacturing equipment"
+  }'
+```
+
+### 4. Mock Credentials
+Log in to the dashboard using one of these analysts:
+- **Username:** `jdoe` | **Password:** `any`
+- **Username:** `asmith` | **Password:** `any`
 
 ### Data & Quality Assurance
 

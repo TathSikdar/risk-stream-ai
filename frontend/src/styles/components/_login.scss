@@ -1,0 +1,126 @@
+@import '../variables';
+
+.login-view {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: $color-primary;
+  background-image: radial-gradient(circle at top right, lighten($color-primary, 5%), $color-primary);
+}
+
+.login-card {
+  width: 400px;
+  background-color: white;
+  padding: $spacing-xl * 1.5;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  text-align: center;
+
+  &__header {
+    margin-bottom: $spacing-xl;
+  }
+
+  &__title {
+    font-size: 1.75rem;
+    font-weight: 800;
+    margin-top: $spacing-md;
+    margin-bottom: $spacing-xs;
+    color: $color-primary;
+  }
+
+  &__subtitle {
+    font-size: 0.85rem;
+    color: $color-text-muted;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+  }
+
+  &__footer {
+    margin-top: $spacing-xl;
+    padding-top: $spacing-lg;
+    border-top: 1px solid $color-border;
+    font-size: 0.75rem;
+    color: $color-text-muted;
+  }
+}
+
+.login-form {
+  text-align: left;
+
+  &__field {
+    margin-bottom: $spacing-lg;
+
+    label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: $color-text-main;
+      margin-bottom: $spacing-xs;
+    }
+  }
+
+  &__error {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    color: $color-danger;
+    background-color: rgba($color-danger, 0.1);
+    padding: $spacing-sm;
+    border-radius: $border-radius;
+    font-size: 0.8rem;
+    margin-bottom: $spacing-lg;
+  }
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  svg {
+    position: absolute;
+    left: $spacing-md;
+    color: $color-text-muted;
+  }
+
+  input {
+    width: 100%;
+    padding: $spacing-md $spacing-md $spacing-md ($spacing-xl + $spacing-sm);
+    border: 1px solid $color-border;
+    border-radius: $border-radius;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+
+    &:focus {
+      outline: none;
+      border-color: $color-primary;
+    }
+  }
+}
+
+.btn-login {
+  width: 100%;
+  padding: $spacing-md;
+  background-color: $color-primary;
+  color: white;
+  border: none;
+  border-radius: $border-radius;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover:not(:disabled) {
+    background-color: lighten($color-primary, 5%);
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+}

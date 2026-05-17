@@ -1,0 +1,90 @@
+@import '../variables';
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  padding: $spacing-lg;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    margin-bottom: $spacing-xl * 2;
+  }
+
+  &__title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+
+  &__nav {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+    flex-grow: 1;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    padding: $spacing-md;
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    border-radius: $border-radius;
+    transition: all 0.2s ease;
+    width: 100%;
+    text-align: left;
+    font-size: 0.95rem;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+    }
+
+    &--active {
+      background: $color-secondary;
+      color: white;
+      font-weight: 600;
+
+      &:hover {
+        background: darken($color-secondary, 5%);
+      }
+    }
+  }
+
+  &__footer {
+    margin-top: auto;
+    padding-top: $spacing-lg;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  &__user {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    margin-bottom: $spacing-md;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  &__logout {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    font-size: 0.85rem;
+    padding: $spacing-xs 0;
+
+    &:hover {
+      color: white;
+    }
+  }
+}

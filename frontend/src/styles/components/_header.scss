@@ -1,0 +1,33 @@
+@import '../variables';
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $spacing-xl;
+  padding-bottom: $spacing-md;
+  border-bottom: 2px solid $color-border;
+
+  &__title {
+    margin-bottom: 0;
+    font-size: 1.75rem;
+  }
+
+  &__badge {
+    background-color: rgba($color-primary, 0.1);
+    color: $color-primary;
+    padding: $spacing-xs $spacing-md;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+}
+
+.view-container {
+  background-color: $color-surface;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  min-height: calc(100vh - 160px);
+  padding: $spacing-lg;
+}

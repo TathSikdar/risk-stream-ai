@@ -1,0 +1,221 @@
+@import '../variables';
+
+.analysis-panel {
+  position: fixed;
+  top: 0;
+  right: -500px;
+  width: 500px;
+  height: 100vh;
+  background-color: $color-surface;
+  box-shadow: -4px 0 15px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+
+  &--open {
+    right: 0;
+  }
+
+  &__header {
+    padding: $spacing-lg;
+    background-color: $color-primary;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__title {
+    margin-bottom: 0;
+    font-size: 1.25rem;
+    color: white;
+  }
+
+  &__close {
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: $spacing-xs;
+    border-radius: 50%;
+    &:hover { background: rgba(255, 255, 255, 0.1); }
+  }
+
+  &__content {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: $spacing-lg;
+  }
+}
+
+.detail-section {
+  margin-bottom: $spacing-xl;
+  
+  &__title {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    color: $color-text-muted;
+    border-bottom: 1px solid $color-border;
+    padding-bottom: $spacing-xs;
+    margin-bottom: $spacing-md;
+    letter-spacing: 1px;
+  }
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $spacing-md;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  
+  label {
+    font-size: 0.75rem;
+    color: $color-text-muted;
+    font-weight: 600;
+  }
+  
+  span {
+    font-size: 0.95rem;
+    color: $color-text-main;
+  }
+
+  &--bold {
+    font-weight: 700;
+    color: $color-primary !important;
+  }
+
+  &--full {
+    grid-column: span 2;
+    margin-top: $spacing-sm;
+  }
+}
+
+.analysis-trigger {
+  text-align: center;
+  padding: $spacing-xl;
+  background: rgba($color-primary, 0.03);
+  border: 1px dashed $color-border;
+  border-radius: $border-radius;
+
+  p {
+    font-size: 0.9rem;
+    color: $color-text-muted;
+    margin-bottom: $spacing-lg;
+  }
+}
+
+.btn-primary {
+  background-color: $color-primary;
+  color: white;
+  border: none;
+  padding: $spacing-md $spacing-xl;
+  border-radius: $border-radius;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-sm;
+  transition: background 0.2s;
+
+  &:hover { background-color: lighten($color-primary, 5%); }
+}
+
+.analysis-loading {
+  text-align: center;
+  padding: $spacing-xl;
+
+  .spinner {
+    color: $color-primary;
+    animation: spin 1s linear infinite;
+    margin-bottom: $spacing-md;
+  }
+
+  p {
+    font-size: 0.9rem;
+    color: $color-text-muted;
+    margin-bottom: $spacing-lg;
+  }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.progress-bar {
+  width: 100%;
+  height: 6px;
+  background-color: $color-border;
+  border-radius: 3px;
+  overflow: hidden;
+
+  &__fill {
+    height: 100%;
+    background-color: $color-secondary;
+    width: 30%;
+    animation: progress 2s ease-in-out infinite;
+  }
+}
+
+@keyframes progress {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(300%); }
+}
+
+.risk-meter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: $spacing-xl;
+  padding: $spacing-lg;
+  border-radius: $border-radius;
+
+  &__score {
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  &__label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  &--low { background-color: rgba($color-success, 0.1); color: $color-success; }
+  &--medium { background-color: rgba($color-warning, 0.1); color: darken($color-warning, 15%); }
+  &--high { background-color: rgba($color-danger, 0.1); color: $color-danger; }
+}
+
+.analysis-reasoning {
+  margin-bottom: $spacing-lg;
+  h4 { font-size: 0.9rem; margin-bottom: $spacing-sm; color: $color-primary; }
+  p { font-size: 0.9rem; line-height: 1.6; color: $color-text-main; }
+}
+
+.analysis-sources {
+  h4 { font-size: 0.9rem; margin-bottom: $spacing-sm; color: $color-primary; }
+  ul { display: flex; flex-direction: column; gap: $spacing-xs; }
+  li {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    font-size: 0.85rem;
+    color: $color-text-muted;
+  }
+}
+
+.analysis-error {
+  padding: $spacing-md;
+  background-color: rgba($color-danger, 0.1);
+  color: $color-danger;
+  border-radius: $border-radius;
+  font-size: 0.9rem;
+  text-align: center;
+}

@@ -1,0 +1,38 @@
+@import 'variables';
+@import 'base/reset';
+@import 'components/sidebar';
+@import 'components/header';
+@import 'components/table';
+@import 'components/analysis';
+@import 'components/login';
+@import 'components/dashboard';
+
+// Global Layout Classes (BEM approach)
+.app {
+  display: flex;
+  min-height: 100vh;
+  
+  &__sidebar {
+    width: 260px;
+    background-color: $color-primary;
+    color: white;
+    flex-shrink: 0;
+  }
+  
+  &__content {
+    flex-grow: 1;
+    padding: $spacing-xl;
+    overflow-y: auto;
+  }
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 999;
+  backdrop-filter: blur(2px);
+}
