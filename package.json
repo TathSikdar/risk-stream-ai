@@ -1,0 +1,16 @@
+{
+  "name": "risk-stream-ai-root",
+  "version": "1.0.0",
+  "description": "Root orchestrator for RiskStream AI",
+  "private": true,
+  "scripts": {
+    "install:all": "npm install --prefix backend && npm install --prefix frontend && pip install -r ai_engine/requirements.txt",
+    "start": "concurrently \"npm run start:ai\" \"npm run start:backend\" \"npm run start:frontend\"",
+    "start:ai": "cd ai_engine && python main.py",
+    "start:backend": "cd backend && npm run dev",
+    "start:frontend": "cd frontend && npm run dev"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

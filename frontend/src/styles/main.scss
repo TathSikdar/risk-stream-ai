@@ -1,9 +1,11 @@
-@import 'variables';
-@import 'base/reset';
-@import 'components/sidebar';
-@import 'components/header';
-@import 'components/table';
-@import 'components/analysis';
+@use 'variables' as *;
+@use 'base/reset';
+@use 'components/sidebar';
+@use 'components/header';
+@use 'components/table';
+@use 'components/analysis';
+@use 'components/modal';
+@use 'components/settings';
 @import 'components/login';
 @import 'components/dashboard';
 
@@ -35,4 +37,44 @@
   background-color: rgba(0, 0, 0, 0.4);
   z-index: 999;
   backdrop-filter: blur(2px);
+}
+
+// Real-time Notification System
+.notification-overlay {
+  position: fixed;
+  bottom: $spacing-xl;
+  right: $spacing-xl;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  z-index: 2000;
+  pointer-events: none;
+}
+
+.notification-toast {
+  pointer-events: auto;
+  background: white;
+  border-left: 4px solid $color-primary;
+  padding: $spacing-md $spacing-lg;
+  border-radius: $border-radius;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+  min-width: 300px;
+  animation: slideIn 0.3s cubic-bezier(0, 0, 0.2, 1);
+  font-size: $font-size-sm;
+  font-weight: 500;
+  color: $color-text;
+
+  &--analysis_started { border-left-color: $color-warning; }
+  &--analysis_completed { border-left-color: $color-success; }
+  &--error { border-left-color: $color-danger; }
+
+  svg { flex-shrink: 0; }
+}
+
+@keyframes slideIn {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
 }

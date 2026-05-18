@@ -19,6 +19,118 @@
   }
 }
 
+.dashboard-banner {
+  background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+  border-radius: $border-radius-lg;
+  padding: $spacing-xl;
+  margin-bottom: $spacing-xl;
+  color: white;
+  box-shadow: $shadow-md;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 300px;
+    height: 300px;
+    background: rgba(237, 28, 36, 0.1);
+    border-radius: 50%;
+    filter: blur(60px);
+  }
+
+  &__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: $spacing-lg;
+      text-align: center;
+    }
+  }
+
+  &__info {
+    max-width: 600px;
+  }
+
+  &__title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: $spacing-xs;
+    color: white;
+  }
+
+  &__description {
+    font-size: $font-size-md;
+    color: #cbd5e0;
+    line-height: 1.5;
+  }
+
+  &__result {
+    margin-top: $spacing-lg;
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    background: rgba($color-success, 0.2);
+    border: 1px solid rgba($color-success, 0.3);
+    color: #9ae6b4;
+    padding: $spacing-sm $spacing-md;
+    border-radius: $border-radius;
+    font-size: $font-size-sm;
+    font-weight: 500;
+    animation: fadeIn 0.3s ease-out;
+  }
+}
+
+.btn-scan {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+  background: $color-primary;
+  color: white;
+  border: none;
+  padding: $spacing-md $spacing-xl;
+  border-radius: $border-radius-md;
+  font-weight: 700;
+  font-size: $font-size-md;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 14px 0 rgba(237, 28, 36, 0.39);
+
+  &:hover:not(:disabled) {
+    background: darken($color-primary, 5%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(237, 28, 36, 0.23);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    background: #4a5568;
+    box-shadow: none;
+    cursor: wait;
+  }
+
+  &--loading {
+    .spinner {
+      animation: spin 1s linear infinite;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .stat-card {
   background: white;
   border-radius: $border-radius-lg;

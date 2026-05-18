@@ -1,0 +1,14 @@
+node_modules
+**/node_modules
+npm-debug.log
+ai_engine/venv
+**/venv
+**/__pycache__
+.env
+.git
+.gitignore
+*.db
+dist
+build
+.vscode
+.idea

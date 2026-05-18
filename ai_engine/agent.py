@@ -95,7 +95,10 @@ def evaluate_risk_node(state: AgentState):
        - Sanctions Match: Instantly 100.
        - Adverse Media: +30-50 depending on severity.
        - Amount: High volume (>$1M) adds weight.
-    2. Provide a detailed professional reasoning.
+    2. Provide a detailed reasoning in plain, professional English. 
+       - Explain the findings clearly for a non-technical compliance officer.
+       - Do NOT use technical jargon, database codes, or raw dataset names.
+       - Focus on the real-world implications of the findings.
     3. Return ONLY a JSON object with the following keys:
        "risk_score": (int),
        "reasoning": (str)
@@ -124,25 +127,25 @@ def evaluate_risk_node(state: AgentState):
 def fallback_risk_calculation(state: AgentState) -> Dict:
     """Deterministic fallback for risk scoring in case of LLM unavailability."""
     score = 10
-    reasoning_parts = ["Baseline risk assessed."]
+    reasoning_parts = ["The system has performed a baseline risk assessment."]
     
     for entity, data in state['research_results'].items():
         if data['sanctions_check']['match']:
             score = 100
-            reasoning_parts.append(f"CRITICAL: {entity} found on sanctions list ({data['sanctions_check']['details']['reason']}).")
+            reasoning_parts.append(f"CRITICAL ALERT: {entity} was identified on official global sanctions lists. {data['sanctions_check']['details']['reason']}")
             break
         
         adverse = data['adverse_media']
         if any(item.get('sentiment') == 'Highly Negative' for item in adverse):
             score += 50
-            reasoning_parts.append(f"High risk adverse media found for {entity}.")
+            reasoning_parts.append(f"High-priority concerns found: Significant negative news and adverse media were discovered for {entity}.")
         elif any(item.get('sentiment') == 'Negative' for item in adverse):
             score += 25
-            reasoning_parts.append(f"Adverse media found for {entity}.")
+            reasoning_parts.append(f"Precautionary note: Some negative news or regulatory mentions were found regarding {entity}.")
 
     if state['transaction']['amount'] > 1000000:
         score += 20
-        reasoning_parts.append("Transaction amount exceeds $1M threshold.")
+        reasoning_parts.append("Risk elevated due to high transaction volume (exceeding $1,000,000).")
         
     return {
         "risk_score": min(100, score),

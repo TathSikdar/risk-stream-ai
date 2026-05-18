@@ -53,3 +53,14 @@ CREATE TABLE IF NOT EXISTS Audit_Logs (
 CREATE INDEX IF NOT EXISTS idx_transactions_status ON Transactions(status);
 CREATE INDEX IF NOT EXISTS idx_risk_assessments_transaction_id ON Risk_Assessments(transaction_id);
 CREATE INDEX IF NOT EXISTS idx_audit_logs_user_id ON Audit_Logs(user_id);
+
+-- 5. Targeted_Entities Table (Watchlist for Global Scan)
+CREATE TABLE IF NOT EXISTS Targeted_Entities (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    entity_name TEXT UNIQUE NOT NULL,
+    category TEXT DEFAULT 'General' CHECK (category IN ('General', 'High Risk', 'Competitor', 'Sanctioned')),
+    added_by INTEGER,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (added_by) REFERENCES Users(id)
+);
+

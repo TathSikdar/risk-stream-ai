@@ -9,6 +9,8 @@ const ai = require('./services/ai');
 
 const bcrypt = require('bcrypt');
 
+const orchestrator = require('./services/orchestrator');
+
 const app = express();
 const JWT_SECRET = process.env.JWT_SECRET || 'risk_stream_ai_super_secret_key';
 
@@ -21,9 +23,11 @@ app.use(express.json());
 // Routes
 const transactionRoutes = require('./routes/transactions');
 const statsRoutes = require('./routes/stats');
+const settingsRoutes = require('./routes/settings');
 
 app.use('/api/transactions', transactionRoutes);
 app.use('/api/stats', statsRoutes);
+app.use('/api/settings', settingsRoutes);
 
 /**
  * @route POST /api/ingest
@@ -32,45 +36,8 @@ app.use('/api/stats', statsRoutes);
  * @access System (API Key)
  */
 app.post('/api/ingest', async (req, res) => {
-    const { sender_name, receiver_name, amount, currency, description } = req.body;
-    
     try {
-        const result = await db.run(
-            `INSERT INTO Transactions (sender_name, receiver_name, amount, currency, status, description) 
-             VALUES (?, ?, ?, ?, 'Pending', ?)`,
-            [sender_name, receiver_name, amount, currency, description]
-        );
-
-        const transactionId = result.id;
-
-        // Audit Log: System Ingestion
-        await audit.logAction(1, 'SYSTEM_INGESTION', 'Transaction', transactionId, { amount });
-
-        // Senior SWE: Trigger AI Analysis Asynchronously
-        // We don't 'await' this so the ingestion response remains fast.
-        (async () => {
-            try {
-                console.log(`Auto-triggering AI Analysis for Transaction #${transactionId}`);
-                const transaction = { id: transactionId, sender_name, receiver_name, amount, currency, description };
-                const analysis = await ai.analyzeTransaction(transaction);
-
-                // Save Risk Assessment
-                await db.run(
-                    `INSERT INTO Risk_Assessments (transaction_id, risk_score, reasoning, sources_checked, status) 
-                     VALUES (?, ?, ?, ?, 'Completed')`,
-                    [transactionId, analysis.risk_score, analysis.reasoning, JSON.stringify(analysis.sources_checked)]
-                );
-
-                // Auto-Flag if risk is high
-                if (analysis.risk_score >= 80) {
-                    await db.run('UPDATE Transactions SET status = "Flagged" WHERE id = ?', [transactionId]);
-                    console.log(`Transaction #${transactionId} auto-flagged as HIGH RISK (${analysis.risk_score})`);
-                }
-            } catch (aiError) {
-                console.error(`Automated Analysis failed for #${transactionId}:`, aiError.message);
-            }
-        })();
-
+        const transactionId = await orchestrator.processTransaction(req.body);
         res.status(201).json({ 
             message: 'Transaction ingested and queued for AI analysis.', 
             transaction_id: transactionId 

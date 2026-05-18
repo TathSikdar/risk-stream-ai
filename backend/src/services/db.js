@@ -17,7 +17,10 @@ if (DB_ENGINE === 'POSTGRES') {
     });
     console.log('PostgreSQL Pool initialized.');
 } else {
-    const DB_PATH = path.resolve(__dirname, '../../../database/risk_stream_ai.db');
+    // Senior SWE: Support environment-driven database path for Docker/Local flexibility
+    const DEFAULT_PATH = path.resolve(__dirname, '../../../database/risk_stream_ai.db');
+    const DB_PATH = process.env.DATABASE_URL || DEFAULT_PATH;
+    
     db = new sqlite3.Database(DB_PATH, (err) => {
         if (err) {
             console.error('Database connection error:', err.message);

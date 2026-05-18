@@ -22,6 +22,36 @@
     font-weight: 600;
     text-transform: uppercase;
   }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+  }
+}
+
+.btn-ingest {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  background-color: $color-primary;
+  color: white;
+  border: none;
+  padding: $spacing-sm $spacing-lg;
+  border-radius: $border-radius;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: darken($color-primary, 5%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
 }
 
 .view-container {

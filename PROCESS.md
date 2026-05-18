@@ -95,6 +95,7 @@ _Target: Finalize the product by removing all mocks and making the dashboard ful
   - [x] Remove hardcoded `adverse_media_db` from `tools.py`.
   - [x] Ensure strict adherence to live API data with robust error handling.
   - [x] Refactor CSV sanctions check to act as a secondary local cache rather than mock fallback.
+  - [x] **Production Transition:** Purge all mock transactional data from the database.
 - [x] **Step 5.3: Secure Authentication & Backend Hardening**
   - [x] Implement password hashing for user accounts using `bcrypt`.
   - [x] Update `seed.py` to generate secure initial credentials.
@@ -102,6 +103,25 @@ _Target: Finalize the product by removing all mocks and making the dashboard ful
 - [x] **Step 5.4: Automated AI Analysis on Ingestion**
   - [x] Update `/api/ingest` to automatically trigger the AI agent for high-value transactions.
   - [x] Implement a notification system for high-risk flags in the UI.
+
+---
+
+## Dynamically Added Steps
+
+- [x] **Step 6.1.1: Fix missing AI Engine dependency**
+  - [x] Add `langchain-google-genai==4.2.2` to `ai_engine/requirements.txt` to resolve `ModuleNotFoundError`.
+- [x] **Step 7.1.1: Fix Backend Native Dependencies in Docker**
+  - [x] Create `.dockerignore` to prevent host `node_modules` pollution.
+  - [x] Update `backend/Dockerfile` with build tools and `npm rebuild` for native modules.
+  - [x] Switch to named volumes in `docker-compose.yml` for robust isolation.
+  - [x] Decouple database path in `db.js` via `DATABASE_URL`.
+- [x] **Step 7.1.2: Fix Frontend Sass Variables**
+  - [x] Resolve `Undefined variable: $border-radius-lg` in `_dashboard.scss`.
+  - [x] Standardize design tokens in `_variables.scss`.
+- [x] **Step 7.3: Real-Time Event System (Socket.io)**
+  - [x] Integrate `socket.io` into Node.js BFF for event broadcasting.
+  - [x] Implement real-time notification toasts in React frontend.
+  - [x] Hook ingestion and AI analysis phases into the WebSocket stream.
 
 ---
 
@@ -113,3 +133,17 @@ _Target: Enable cost-effective scaling by supporting the Gemini free tier._
   - [x] Install `langchain-google-genai` and update `requirements.txt`.
   - [x] Refactor `get_llm()` to support the `GEMINI` provider using `gemini-1.5-flash`.
   - [x] Update `.env.example` and `README.md` to document the new provider configuration.
+
+---
+
+## Phase 7: Orchestration & Containerization
+
+_Target: Enable single-command startup for the entire ecosystem._
+
+- [x] **Step 7.1: Multi-Container Dockerization**
+  - [x] Create optimized `Dockerfile`s for AI Engine, Backend, and Frontend.
+  - [x] Implement `docker-compose.yml` for unified service orchestration.
+  - [x] Configure volume mapping for real-time code updates and database persistence.
+- [x] **Step 7.2: Root NPM Orchestration**
+  - [x] Initialize root `package.json` with `concurrently`.
+  - [x] Implement unified `npm start` command for local non-Docker development.

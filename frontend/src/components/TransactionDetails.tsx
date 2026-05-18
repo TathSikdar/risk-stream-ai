@@ -16,8 +16,14 @@ interface TransactionDetailsProps {
 
 const TransactionDetails: React.FC<TransactionDetailsProps> = ({ transaction, onClose, onAnalysisComplete }) => {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const [analysis, setAnalysis] = useState<AnalysisResult | null>(null);
+  const [analysis, setAnalysis] = useState<AnalysisResult | null>(transaction.analysis || null);
   const [error, setError] = useState<string | null>(null);
+
+  // Update local analysis state if the transaction prop changes (e.g., user selects a different txn)
+  React.useEffect(() => {
+    setAnalysis(transaction.analysis || null);
+    setError(null);
+  }, [transaction]);
 
   const handleAnalyze = async () => {
     setIsAnalyzing(true);

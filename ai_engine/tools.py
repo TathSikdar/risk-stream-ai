@@ -65,7 +65,7 @@ def check_sanctions_list(entity_name: str) -> str:
                     "source": "OpenSanctions API",
                     "details": {
                         "entity_name": result.get('caption'),
-                        "reason": f"Found in datasets: {', '.join(result.get('datasets', []))}",
+                        "reason": f"This entity was found on official global watchlists and regulatory databases.",
                         "risk_level": "High" if 'sanctions' in result.get('datasets', []) else "Medium"
                     }
                 })

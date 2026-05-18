@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { transactionService } from '../services/api';
-import { Activity, AlertTriangle, TrendingUp, Users, Loader2 } from 'lucide-react';
+import { Activity, AlertTriangle, TrendingUp, Users, Loader2, RefreshCw, Search, ShieldCheck } from 'lucide-react';
 
 interface DashboardStats {
   summary: {
@@ -21,21 +21,42 @@ interface DashboardStats {
 const Dashboard: React.FC = () => {
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isScanning, setIsScanning] = useState(false);
+  const [scanResult, setScanResult] = useState<string | null>(null);
+
+  const fetchStats = async () => {
+    try {
+      const data = await transactionService.getDashboardStats();
+      setStats(data);
+    } catch (error) {
+      console.error('Failed to load dashboard stats:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        const data = await transactionService.getDashboardStats();
-        setStats(data);
-      } catch (error) {
-        console.error('Failed to load dashboard stats:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
     fetchStats();
   }, []);
+
+  const handleGlobalScan = async () => {
+    setIsScanning(true);
+    setScanResult(null);
+    try {
+      const result = await transactionService.scanTransactions();
+      setScanResult(result.message);
+      // Refresh stats to show new data
+      await fetchStats();
+      
+      // Clear message after 5 seconds
+      setTimeout(() => setScanResult(null), 5000);
+    } catch (error) {
+      console.error('Global scan failed:', error);
+      setScanResult('Surveillance scan failed. Please check network connectivity.');
+    } finally {
+      setIsScanning(false);
+    }
+  };
 
   if (isLoading) {
     return (
@@ -56,6 +77,38 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className="dashboard">
+      {/* Global Surveillance Controls */}
+      <section className="dashboard-banner">
+        <div className="dashboard-banner__content">
+          <div className="dashboard-banner__info">
+            <h2 className="dashboard-banner__title">Global Surveillance Scan</h2>
+            <p className="dashboard-banner__description">
+              Synchronize with external banking ledgers to discover new transactions for targeted entities.
+            </p>
+          </div>
+          <div className="dashboard-banner__actions">
+            <button 
+              className={`btn-scan ${isScanning ? 'btn-scan--loading' : ''}`}
+              onClick={handleGlobalScan}
+              disabled={isScanning}
+            >
+              {isScanning ? (
+                <RefreshCw size={18} className="spinner" />
+              ) : (
+                <Search size={18} />
+              )}
+              <span>{isScanning ? 'Scanning External Ledgers...' : 'Auto Check for Updates'}</span>
+            </button>
+          </div>
+        </div>
+        {scanResult && (
+          <div className="dashboard-banner__result">
+            <ShieldCheck size={16} />
+            <span>{scanResult}</span>
+          </div>
+        )}
+      </section>
+
       <div className="dashboard__grid">
         {/* Summary Cards */}
         <div className="stat-card">
